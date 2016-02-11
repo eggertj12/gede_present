@@ -7,6 +7,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 	[RequireComponent(typeof(Animator))]
 	public class ThirdPersonCharacter : MonoBehaviour
 	{
+		public Rigidbody m_Snowball;            
+		public Transform m_SnowballHand;    
 		[SerializeField] float m_MovingTurnSpeed = 360;
 		[SerializeField] float m_StationaryTurnSpeed = 180;
 		[SerializeField] float m_JumpPower = 12f;
@@ -28,6 +30,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		Vector3 m_CapsuleCenter;
 		CapsuleCollider m_Capsule;
 		bool m_Crouching;
+		bool m_HasBall;
+		Rigidbody m_BallInHand = null;
 
 
 		void Start()
@@ -43,7 +47,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		}
 
 
-		public void Move(Vector3 move, bool crouch, bool jump)
+		public void Move(Vector3 move, bool crouch, bool jump, bool action)
 		{
 
 			// convert the world relative moveInput vector into a local-relative
@@ -61,7 +65,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			// control and velocity handling is different when grounded and airborne:
 			if (m_IsGrounded)
 			{
-				HandleGroundedMovement(crouch, jump);
+				HandleGroundedMovement(crouch, jump, action);
 			}
 			else
 			{
@@ -122,7 +126,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_Animator.SetFloat("Turn", m_TurnAmount, 0.1f, Time.deltaTime);
 			m_Animator.SetBool("Crouch", m_Crouching);
 			m_Animator.SetBool("OnGround", m_IsGrounded);
-			m_Animator.SetBool("Pickup", false);
 			if (!m_IsGrounded)
 			{
 				m_Animator.SetFloat("Jump", m_Rigidbody.velocity.y);
@@ -164,7 +167,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		}
 
 
-		void HandleGroundedMovement(bool crouch, bool jump)
+		void HandleGroundedMovement(bool crouch, bool jump, bool action)
 		{
 			// check whether conditions are right to allow a jump:
 			if (jump && !crouch && m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Grounded"))
@@ -175,6 +178,39 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_Animator.applyRootMotion = false;
 				m_GroundCheckDistance = 0.1f;
 			}
+
+			if (action && !m_HasBall) 
+			{
+				m_Animator.SetBool ("Pickup", true);
+			}
+
+			if (action && m_HasBall) 
+			{
+				m_Animator.SetBool ("Throwing", true);
+			}
+
+		}
+
+		void PickupBall()
+		{
+			m_Animator.SetBool ("Pickup", false);
+
+			m_HasBall = true;
+			m_BallInHand = Instantiate (m_Snowball, m_SnowballHand.position, m_SnowballHand.rotation) as Rigidbody;
+			m_BallInHand.transform.parent = m_SnowballHand;
+		}
+
+		void ThrowBall()
+		{
+			m_Animator.SetBool ("Throwing", false);
+
+			m_HasBall = false;
+			m_BallInHand.transform.parent = null;
+			m_BallInHand.useGravity = true;
+			m_BallInHand.isKinematic = false;
+			m_BallInHand.velocity = m_SnowballHand.forward * 5f;
+			var script = m_BallInHand.GetComponent<WhatTheFuck.SnowballHandler> ();
+			script.m_isThrown = true;
 		}
 
 		void ApplyExtraTurnRotation()

@@ -228,8 +228,8 @@ ModelImporter:
     - serializedVersion: 16
       name: lifting
       takeName: mixamo.com
-      firstFrame: 0
-      lastFrame: 117
+      firstFrame: 20
+      lastFrame: 74
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -239,20 +239,21 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
+      keepOriginalPositionY: 0
       keepOriginalPositionXZ: 0
-      heightFromFeet: 0
+      heightFromFeet: 1
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0
-        functionName: Finished
+      - time: 0.46015552
+        functionName: PickupBall
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 11500000, guid: ce7a80d520cacc042b5fe14f373d8173,
+          type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
