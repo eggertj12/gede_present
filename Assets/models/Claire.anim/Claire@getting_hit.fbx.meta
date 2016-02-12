@@ -163,7 +163,7 @@ ModelImporter:
     400152: Spine
     400154: Spine1
     400156: Spine2
-    7400000: mixamo.com
+    7400000: getting_hit
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -176,7 +176,46 @@ ModelImporter:
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nDefault bone length found in this file is different
+      form the one found in the source avatar:\n\t'LeftUpLeg' : position error = 14.140016
+      mm\n\t'LeftLeg' : position error = 39.795982 mm\n\t'LeftFoot' : position error
+      = 43.082142 mm\n\t'LeftToeBase' : position error = 18.129816 mm\n\t'RightUpLeg'
+      : position error = 14.140001 mm\n\t'RightLeg' : position error = 39.795876 mm\n\t'RightFoot'
+      : position error = 43.081562 mm\n\t'RightToeBase' : position error = 18.129835
+      mm\n\t'Spine' : position error = 9.773681 mm\n\t'Spine1' : position error =
+      10.213277 mm\n\t'Spine2' : position error = 9.214006 mm\n\t'Neck' : position
+      error = 26.919851 mm\n\t'Head' : position error = 11.026217 mm\n\t'Bow_Left'
+      : position error = 49.216125 mm\n\t'Bow_Right' : position error = 46.342892
+      mm\n\t'HairC' : position error = 46.817654 mm\n\t'LeftShoulder' : position error
+      = 21.576178 mm\n\t'LeftArm' : position error = 10.690866 mm\n\t'LeftForeArm'
+      : position error = 26.149212 mm\n\t'LeftHand' : position error = 25.907228 mm\n\t'LeftHandThumb1'
+      : position error = 6.497458 mm\n\t'LeftHandThumb2' : position error = 4.919583
+      mm\n\t'LeftHandThumb3' : position error = 4.851645 mm\n\t'LeftHandIndex1' :
+      position error = 15.335934 mm\n\t'LeftHandIndex2' : position error = 4.033925
+      mm\n\t'LeftHandIndex3' : position error = 4.084649 mm\n\t'LeftHandMiddle1' :
+      position error = 14.904397 mm\n\t'LeftHandMiddle2' : position error = 4.190560
+      mm\n\t'LeftHandMiddle3' : position error = 4.069805 mm\n\t'LeftHandRing1' :
+      position error = 15.811842 mm\n\t'LeftHandRing2' : position error = 3.751561
+      mm\n\t'LeftHandRing3' : position error = 4.050122 mm\n\t'LeftHandPinky1' : position
+      error = 16.100035 mm\n\t'LeftHandPinky2' : position error = 3.516804 mm\n\t'LeftHandPinky3'
+      : position error = 3.518635 mm\n\t'RightShoulder' : position error = 21.576603
+      mm\n\t'RightArm' : position error = 10.690196 mm\n\t'RightForeArm' : position
+      error = 26.148508 mm\n\t'RightHand' : position error = 25.907677 mm\n\t'RightHandThumb1'
+      : position error = 6.497647 mm\n\t'RightHandThumb2' : position error = 4.919535
+      mm\n\t'RightHandThumb3' : position error = 4.851680 mm\n\t'RightHandIndex1'
+      : position error = 15.335911 mm\n\t'RightHandIndex2' : position error = 4.034335
+      mm\n\t'RightHandIndex3' : position error = 4.083947 mm\n\t'RightHandMiddle1'
+      : position error = 14.903788 mm\n\t'RightHandMiddle2' : position error = 4.190917
+      mm\n\t'RightHandMiddle3' : position error = 4.069950 mm\n\t'RightHandRing1'
+      : position error = 15.811697 mm\n\t'RightHandRing2' : position error = 3.751592
+      mm\n\t'RightHandRing3' : position error = 4.049253 mm\n\t'RightHandPinky1' :
+      position error = 16.101242 mm\n\t'RightHandPinky2' : position error = 3.516251
+      mm\n\t'RightHandPinky3' : position error = 3.517861 mm\n\nInbetween bone default
+      rotation found in this file is different from the one found in the source avatar:\n\t'Spine1'
+      : rotation error = 1.694734 deg\n\nClip 'mixamo.com' has import animation warnings
+      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'Spine1' is inbetween humanoid transforms
+      and has rotation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     animationCompression: 1
@@ -185,7 +224,193 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: getting_hit
+      takeName: mixamo.com
+      firstFrame: 17
+      lastFrame: 94
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Hips
+        weight: 1
+      - path: Hips/Girl01FacialAnim_Joint
+        weight: 0
+      - path: Hips/Pelvis
+        weight: 1
+      - path: Hips/Pelvis/LeftUpLeg
+        weight: 1
+      - path: Hips/Pelvis/LeftUpLeg/LeftLeg
+        weight: 1
+      - path: Hips/Pelvis/LeftUpLeg/LeftLeg/LeftFoot
+        weight: 1
+      - path: Hips/Pelvis/LeftUpLeg/LeftLeg/LeftFoot/LeftToeBase
+        weight: 1
+      - path: Hips/Pelvis/RightUpLeg
+        weight: 1
+      - path: Hips/Pelvis/RightUpLeg/RightLeg
+        weight: 1
+      - path: Hips/Pelvis/RightUpLeg/RightLeg/RightFoot
+        weight: 1
+      - path: Hips/Pelvis/RightUpLeg/RightLeg/RightFoot/RightToeBase
+        weight: 1
+      - path: Hips/SkirtA
+        weight: 0
+      - path: Hips/SkirtA/SkirtA1
+        weight: 0
+      - path: Hips/SkirtB
+        weight: 0
+      - path: Hips/SkirtB/SkirtB1
+        weight: 0
+      - path: Hips/SkirtC
+        weight: 0
+      - path: Hips/SkirtC/SkirtC1
+        weight: 0
+      - path: Hips/Spine
+        weight: 1
+      - path: Hips/Spine/Belly
+        weight: 0
+      - path: Hips/Spine/Spine1
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/Left_Breast
+        weight: 0
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder/LeftArm
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder/LeftArm/LeftForeArm
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder/LeftArm/LeftForeArm/LeftHand
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandIndex1
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandIndex1/LeftHandIndex2
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandIndex1/LeftHandIndex2/LeftHandIndex3
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandMiddle1
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandMiddle1/LeftHandMiddle2
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandMiddle1/LeftHandMiddle2/LeftHandMiddle3
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandPinky1
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandPinky1/LeftHandPinky2
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandPinky1/LeftHandPinky2/LeftHandPinky3
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandRing1
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandRing1/LeftHandRing2
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandRing1/LeftHandRing2/LeftHandRing3
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandThumb1
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandThumb1/LeftHandThumb2
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandThumb1/LeftHandThumb2/LeftHandThumb3
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder/LeftArm/LeftForeArm/LeftWristTwist
+        weight: 0
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder/LeftArm/LeftUpArmCounterTwist
+        weight: 0
+      - path: Hips/Spine/Spine1/Spine2/LeftShoulder/LeftArm/LeftUpArmTwist
+        weight: 0
+      - path: Hips/Spine/Spine1/Spine2/Neck
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/Neck/Head
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/Neck/Head/Bow_Left
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/Neck/Head/Bow_Right
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/Neck/Head/HairA
+        weight: 0
+      - path: Hips/Spine/Spine1/Spine2/Neck/Head/HairB
+        weight: 0
+      - path: Hips/Spine/Spine1/Spine2/Neck/Head/HairC
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/Neck/Head/HairC/HairC1
+        weight: 0
+      - path: Hips/Spine/Spine1/Spine2/Neck/Head/Ponytail
+        weight: 0
+      - path: Hips/Spine/Spine1/Spine2/Neck/Head/Ponytail/Ponytail1
+        weight: 0
+      - path: Hips/Spine/Spine1/Spine2/Neck/Head/Ponytail/Ponytail1/Ponytail2
+        weight: 0
+      - path: Hips/Spine/Spine1/Spine2/Right_Breast
+        weight: 0
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder/RightArm
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/RightHandIndex1
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/RightHandIndex1/RightHandIndex2
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/RightHandIndex1/RightHandIndex2/RightHandIndex3
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/RightHandMiddle1
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/RightHandMiddle1/RightHandMiddle2
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/RightHandMiddle1/RightHandMiddle2/RightHandMiddle3
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/RightHandPinky1
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/RightHandPinky1/RightHandPinky2
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/RightHandPinky1/RightHandPinky2/RightHandPinky3
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/RightHandRing1
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/RightHandRing1/RightHandRing2
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/RightHandRing1/RightHandRing2/RightHandRing3
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/RightHandThumb1
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/RightHandThumb1/RightHandThumb2
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/RightHandThumb1/RightHandThumb2/RightHandThumb3
+        weight: 1
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightWristTwist
+        weight: 0
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightUpArmCounterTwist
+        weight: 0
+      - path: Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightUpArmTwist
+        weight: 0
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []

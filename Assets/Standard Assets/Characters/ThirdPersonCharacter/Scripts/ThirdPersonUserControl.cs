@@ -8,6 +8,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
     public class ThirdPersonUserControl : MonoBehaviour
     {
 		public int m_PlayerNumber = 1;
+		public Camera m_Camera;
 
         private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
         private Transform m_Cam;                  // A reference to the main camera in the scenes transform
@@ -33,17 +34,18 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_CtrlJump = "Jump" + m_PlayerNumber;
 			m_CtrlWalk = "Walk" + m_PlayerNumber;
 
-            // get the transform of the main camera
-            if (Camera.main != null)
-            {
-                m_Cam = Camera.main.transform;
-            }
-            else
-            {
-                Debug.LogWarning(
-                    "Warning: no main camera found. Third person character needs a Camera tagged \"MainCamera\", for camera-relative controls.");
-                // we use self-relative controls in this case, which probably isn't what the user wants, but hey, we warned them!
-            }
+			m_Cam = m_Camera.transform;
+//            // get the transform of the main camera
+//            if (Camera.main != null)
+//            {
+//                m_Cam = Camera.main.transform;
+//            }
+//            else
+//            {
+//                Debug.LogWarning(
+//                    "Warning: no main camera found. Third person character needs a Camera tagged \"MainCamera\", for camera-relative controls.");
+//                // we use self-relative controls in this case, which probably isn't what the user wants, but hey, we warned them!
+//            }
 
             // get the third person character ( this should never be null due to require component )
             m_Character = GetComponent<ThirdPersonCharacter>();

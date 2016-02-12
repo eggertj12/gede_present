@@ -196,7 +196,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_Animator.SetBool ("Pickup", false);
 
 			m_HasBall = true;
-			m_BallInHand = Instantiate (m_Snowball, m_SnowballHand.position, m_SnowballHand.rotation) as Rigidbody;
+			m_BallInHand = Instantiate (m_Snowball, m_SnowballHand.position, Quaternion.identity) as Rigidbody;
 			m_BallInHand.transform.parent = m_SnowballHand;
 		}
 
@@ -205,12 +205,35 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_Animator.SetBool ("Throwing", false);
 
 			m_HasBall = false;
+
 			m_BallInHand.transform.parent = null;
+
+			Vector3 throwDirection = m_SnowballHand.forward;
+			throwDirection.y = 0f;
+			throwDirection.Normalize ();
+			throwDirection.y = 0.10f;
+
+			m_BallInHand.velocity = throwDirection * 12f;
+			m_BallInHand.position = m_BallInHand.position + (throwDirection * 0.3f);
+
 			m_BallInHand.useGravity = true;
 			m_BallInHand.isKinematic = false;
-			m_BallInHand.velocity = m_SnowballHand.forward * 5f;
+
 			var script = m_BallInHand.GetComponent<WhatTheFuck.SnowballHandler> ();
 			script.m_isThrown = true;
+		}
+
+		public void hit() 
+		{
+			m_Animator.SetBool ("Hit", true);
+
+			// This for sure is a stupid way to do this.
+			Invoke ("clearHitFlag", 0.2f);
+		}
+
+		void clearHitFlag()
+		{
+			m_Animator.SetBool ("Hit", false);
 		}
 
 		void ApplyExtraTurnRotation()

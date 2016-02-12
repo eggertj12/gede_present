@@ -13,6 +13,7 @@ namespace WhatTheFuck
 		[HideInInspector] public bool m_isThrown = false;
 
 		private ParticleSystem m_SnowballHitParticles;
+		private bool m_hasHit = false;
 
 		// Use this for initialization
 		void Start () {
@@ -26,19 +27,35 @@ namespace WhatTheFuck
 			if (!m_isThrown) {
 				return;
 			}
-			Debug.LogWarning ("Hitting something");
+
+			if (m_hasHit) {
+				return;
+			}
+			m_hasHit = true;
+
+			if (LayerMask.NameToLayer("Player") == other.gameObject.layer)
+			{
+				Debug.LogWarning ("Hitting player ");
+
+				var script = other.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter> ();
+				script.hit ();
+
+			}
+			else
+			{
+				Debug.LogWarning ("Hitting something else");
+			}
 
 			m_SnowballHitParticles = gameObject.GetComponentInChildren<ParticleSystem>();
+
 			gameObject.GetComponent<Rigidbody> ().isKinematic = true;
 
-//			m_SnowballHitParticles.transform.parent = null;
+			gameObject.transform.localScale = Vector3.zero;
+
+			m_SnowballHitParticles.transform.rotation = Quaternion.identity;
 			m_SnowballHitParticles.Play ();
 
-//			Destroy (m_SnowballHitParticles.gameObject, m_SnowballHitParticles.duration);
-
 			Destroy (gameObject, m_SnowballHitParticles.duration);
-
-			//		Destroy (gameObject);
 		}
 
 
