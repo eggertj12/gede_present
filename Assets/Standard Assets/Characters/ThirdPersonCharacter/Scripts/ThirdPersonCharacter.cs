@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UnityStandardAssets.Characters.ThirdPerson
 {
@@ -9,6 +10,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 	{
 		public Rigidbody m_Snowball;            
 		public Transform m_SnowballHand;    
+		public Slider m_Slider;
 		[SerializeField] float m_MovingTurnSpeed = 360;
 		[SerializeField] float m_StationaryTurnSpeed = 180;
 		[SerializeField] float m_JumpPower = 12f;
@@ -17,6 +19,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		[SerializeField] float m_MoveSpeedMultiplier = 1f;
 		[SerializeField] float m_AnimSpeedMultiplier = 1f;
 		[SerializeField] float m_GroundCheckDistance = 0.1f;
+		[SerializeField] float m_MinThrowForce = 5f;
+		[SerializeField] float m_MaxThrowForce = 15f;
+		[SerializeField] float m_ChargingFactor = 20f;
 
 		Rigidbody m_Rigidbody;
 		Animator m_Animator;
@@ -29,9 +34,13 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		float m_CapsuleHeight;
 		Vector3 m_CapsuleCenter;
 		CapsuleCollider m_Capsule;
-		bool m_Crouching;
-		bool m_HasBall;
+		bool m_Crouching = false;
+		bool m_HasBall = false;
+		bool m_Charging = false;
+		float m_CurrentForce;
 		Rigidbody m_BallInHand = null;
+
+		AudioSource m_Footstep = null;
 
 
 		void Start()
@@ -41,6 +50,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_Capsule = GetComponent<CapsuleCollider>();
 			m_CapsuleHeight = m_Capsule.height;
 			m_CapsuleCenter = m_Capsule.center;
+
+			m_CurrentForce = m_MinThrowForce;
+			m_Slider.value = m_CurrentForce;
+
+			m_Footstep = GetComponents<AudioSource> () [0];
 
 			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 			m_OrigGroundCheckDistance = m_GroundCheckDistance;
@@ -184,13 +198,30 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_Animator.SetBool ("Pickup", true);
 			}
 
-			if (action && m_HasBall) 
+			// Starting a throw sequence
+			if (action && m_HasBall && !m_Charging) 
 			{
+				m_CurrentForce = m_MinThrowForce;
+				m_Slider.value = m_CurrentForce;
+				m_Charging = true;
+			}
+			else if (action && m_HasBall && m_Charging) 
+			{
+				m_CurrentForce += m_ChargingFactor * Time.deltaTime;
+				m_CurrentForce = Mathf.Min (m_CurrentForce, m_MaxThrowForce);
+				m_Slider.value = m_CurrentForce;
+			}
+			else if (!action && m_HasBall && m_Charging)
+			{
+				Debug.LogWarning (action + ", " + m_HasBall + ", " + m_Charging);
 				m_Animator.SetBool ("Throwing", true);
 			}
 
 		}
 
+		/** 
+		 * Event handler for pickup ball event from animation
+		 */
 		void PickupBall()
 		{
 			m_Animator.SetBool ("Pickup", false);
@@ -200,27 +231,36 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_BallInHand.transform.parent = m_SnowballHand;
 		}
 
+		/** 
+		 * Event handler for throw ball event from animation
+		 */
 		void ThrowBall()
 		{
 			m_Animator.SetBool ("Throwing", false);
 
 			m_HasBall = false;
+			m_Charging = false;
 
 			m_BallInHand.transform.parent = null;
 
-			Vector3 throwDirection = m_SnowballHand.forward;
+			Vector3 throwDirection = gameObject.transform.forward;
 			throwDirection.y = 0f;
 			throwDirection.Normalize ();
-			throwDirection.y = 0.10f;
+			throwDirection.y = 0.03f * m_CurrentForce;
 
-			m_BallInHand.velocity = throwDirection * 12f;
-			m_BallInHand.position = m_BallInHand.position + (throwDirection * 0.3f);
+//			Debug.LogWarning ("Throwing with a force of: " + m_CurrentForce);
+
+			m_BallInHand.velocity = throwDirection * m_CurrentForce;
+			m_BallInHand.position = m_BallInHand.position + (throwDirection * 0.5f);
 
 			m_BallInHand.useGravity = true;
 			m_BallInHand.isKinematic = false;
 
 			var script = m_BallInHand.GetComponent<WhatTheFuck.SnowballHandler> ();
 			script.m_isThrown = true;
+
+			m_CurrentForce = m_MinThrowForce;
+			m_Slider.value = m_CurrentForce;
 		}
 
 		public void hit() 
@@ -234,6 +274,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		void clearHitFlag()
 		{
 			m_Animator.SetBool ("Hit", false);
+		}
+
+		public void step()
+		{
+			m_Footstep.Play ();
 		}
 
 		void ApplyExtraTurnRotation()
@@ -257,8 +302,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_Rigidbody.velocity = v;
 			}
 		}
-
-
+			
 		void CheckGroundStatus()
 		{
 			RaycastHit hitInfo;

@@ -59,22 +59,22 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_Jump = Input.GetButton (m_CtrlJump);
             }
 
-			if (!m_Action) 
+			if (Input.GetButtonDown(m_CtrlAction)) 
 			{
-				m_Action = Input.GetButton (m_CtrlAction);
-			} 
-			else
+				m_Action = true;
+			}
+			else if (Input.GetButtonUp(m_CtrlAction)) 
 			{
 				m_Action = false;
 			}
 
-//			if (!m_Throw) 
+//			if (!m_Action) 
 //			{
-//				m_Throw = Input.GetButton (m_CtrlThrow);
+//				m_Action = Input.GetButton (m_CtrlAction);
 //			} 
 //			else
 //			{
-//				m_Throw = false;
+//				m_Action = false;
 //			}
         }
 

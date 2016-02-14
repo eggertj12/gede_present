@@ -35,7 +35,7 @@ namespace WhatTheFuck
 
 			if (LayerMask.NameToLayer("Player") == other.gameObject.layer)
 			{
-				Debug.LogWarning ("Hitting player ");
+//				Debug.LogWarning ("Hitting player ");
 
 				var script = other.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter> ();
 				script.hit ();
@@ -43,7 +43,7 @@ namespace WhatTheFuck
 			}
 			else
 			{
-				Debug.LogWarning ("Hitting something else");
+//				Debug.LogWarning ("Hitting something else");
 			}
 
 			m_SnowballHitParticles = gameObject.GetComponentInChildren<ParticleSystem>();
