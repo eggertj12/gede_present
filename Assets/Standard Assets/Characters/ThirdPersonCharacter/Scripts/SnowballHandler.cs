@@ -15,8 +15,13 @@ namespace WhatTheFuck
 		private ParticleSystem m_SnowballHitParticles;
 		private bool m_hasHit = false;
 
+		private AudioSource m_HitPlayerSound;
+		private AudioSource m_HitOtherSound;
+
 		// Use this for initialization
 		void Start () {
+			m_HitOtherSound = GetComponents<AudioSource> () [0];
+//			m_HitPlayerSound = GetComponents<AudioSource> () [1];
 //			Debug.LogWarning ("parent " + gameObject.name);
 //			m_SnowballHitParticles.transform.position = new Vector3 (0, 0, 0);
 //			m_SnowballHitParticles.transform.parent = gameObject.transform;
@@ -38,11 +43,14 @@ namespace WhatTheFuck
 //				Debug.LogWarning ("Hitting player ");
 
 				var script = other.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter> ();
-				script.hit ();
+				script.hit (gameObject.GetComponent<Rigidbody>().velocity.magnitude);
+
+				m_HitOtherSound.Play ();
 
 			}
 			else
 			{
+				m_HitOtherSound.Play ();
 //				Debug.LogWarning ("Hitting something else");
 			}
 

@@ -9,8 +9,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 	public class ThirdPersonCharacter : MonoBehaviour
 	{
 		public Rigidbody m_Snowball;            
-		public Transform m_SnowballHand;    
-		public Slider m_Slider;
+		public Transform m_SnowballHand; 
+		public Transform m_SpawnPoint;
+		public Slider m_ChargeSlider;
+		public Slider m_HealthSlider;
+		public string m_CharacterName;
 		[SerializeField] float m_MovingTurnSpeed = 360;
 		[SerializeField] float m_StationaryTurnSpeed = 180;
 		[SerializeField] float m_JumpPower = 12f;
@@ -22,6 +25,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		[SerializeField] float m_MinThrowForce = 5f;
 		[SerializeField] float m_MaxThrowForce = 15f;
 		[SerializeField] float m_ChargingFactor = 20f;
+
+		[HideInInspector] public bool m_IsDead;
+		[HideInInspector] public bool m_IsActive;
+		[HideInInspector] public int m_Wins = 0;
 
 		Rigidbody m_Rigidbody;
 		Animator m_Animator;
@@ -41,6 +48,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		Rigidbody m_BallInHand = null;
 
 		AudioSource m_Footstep = null;
+		float m_OriginalPitch;
+		float m_PitchRange = 0.2f;
+
+		float m_CurrentHealth;
 
 
 		void Start()
@@ -51,18 +62,49 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_CapsuleHeight = m_Capsule.height;
 			m_CapsuleCenter = m_Capsule.center;
 
-			m_CurrentForce = m_MinThrowForce;
-			m_Slider.value = m_CurrentForce;
-
 			m_Footstep = GetComponents<AudioSource> () [0];
 
 			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 			m_OrigGroundCheckDistance = m_GroundCheckDistance;
+
+			// Store the original pitch of the audio source.
+			m_OriginalPitch = m_Footstep.pitch;
+
+			Init ();
+		}
+
+		public void Init()
+		{
+			m_CurrentHealth = 100f;
+			m_HealthSlider.value = m_CurrentHealth;
+			gameObject.transform.position = m_SpawnPoint.position;
+			gameObject.transform.rotation = m_SpawnPoint.rotation;
+
+			m_CurrentForce = m_MinThrowForce;
+			m_ChargeSlider.value = m_CurrentForce;
+
+			m_IsDead = false;
+			m_IsActive = false;
+
+		}
+
+		public void ResetAnim()
+		{
+//			m_Animator.SetFloat("Forward", 0);
+//			m_Animator.SetFloat("Turn", 0);
+//			m_Animator.SetBool("Crouch", false);
+//			m_Animator.SetBool("OnGround", true);
+//			m_Animator.SetFloat("Jump", 0);
+//			m_Animator.SetBool("Pickup", false);
+//			m_Animator.SetBool("Throwing", false);
+//			m_Animator.SetBool("Hit", false);
+//			m_Animator.SetBool("Won", false);
 		}
 
 
 		public void Move(Vector3 move, bool crouch, bool jump, bool action)
 		{
+			m_Animator.SetBool("Won", false);
 
 			// convert the world relative moveInput vector into a local-relative
 			// turn amount and forward amount required to head in the desired
@@ -202,18 +244,18 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			if (action && m_HasBall && !m_Charging) 
 			{
 				m_CurrentForce = m_MinThrowForce;
-				m_Slider.value = m_CurrentForce;
+				m_ChargeSlider.value = m_CurrentForce;
 				m_Charging = true;
 			}
 			else if (action && m_HasBall && m_Charging) 
 			{
 				m_CurrentForce += m_ChargingFactor * Time.deltaTime;
 				m_CurrentForce = Mathf.Min (m_CurrentForce, m_MaxThrowForce);
-				m_Slider.value = m_CurrentForce;
+				m_ChargeSlider.value = m_CurrentForce;
 			}
 			else if (!action && m_HasBall && m_Charging)
 			{
-				Debug.LogWarning (action + ", " + m_HasBall + ", " + m_Charging);
+//				Debug.LogWarning (action + ", " + m_HasBall + ", " + m_Charging);
 				m_Animator.SetBool ("Throwing", true);
 			}
 
@@ -246,7 +288,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			Vector3 throwDirection = gameObject.transform.forward;
 			throwDirection.y = 0f;
 			throwDirection.Normalize ();
-			throwDirection.y = 0.03f * m_CurrentForce;
+			throwDirection.y = 0.01f * m_CurrentForce;
 
 //			Debug.LogWarning ("Throwing with a force of: " + m_CurrentForce);
 
@@ -260,12 +302,22 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			script.m_isThrown = true;
 
 			m_CurrentForce = m_MinThrowForce;
-			m_Slider.value = m_CurrentForce;
+			m_ChargeSlider.value = m_CurrentForce;
 		}
 
-		public void hit() 
+		public void hit(float speed) 
 		{
 			m_Animator.SetBool ("Hit", true);
+
+			m_CurrentHealth -= speed * 20;
+			m_CurrentHealth = Mathf.Max (m_CurrentHealth, 0f);
+			m_HealthSlider.value = m_CurrentHealth;
+
+			if (m_CurrentHealth <= 0)
+			{
+				m_IsDead = true;
+				m_IsActive = false;
+			}
 
 			// This for sure is a stupid way to do this.
 			Invoke ("clearHitFlag", 0.2f);
@@ -276,8 +328,14 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_Animator.SetBool ("Hit", false);
 		}
 
+		public void won()
+		{
+			m_Animator.SetBool ("Won", true);
+		}
+
 		public void step()
 		{
+			m_Footstep.pitch = Random.Range (m_OriginalPitch - m_PitchRange, m_OriginalPitch + m_PitchRange);
 			m_Footstep.Play ();
 		}
 

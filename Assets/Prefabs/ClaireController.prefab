@@ -2481,7 +2481,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 9058c2a5795404268b0ae55b7867b0c6, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 371d101ba235b4658b89ecb863c4f6c5, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -2614,6 +2614,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Snowball: {fileID: 5490092, guid: c14b2e8d32f1d4cdb95d839543d55956, type: 2}
   m_SnowballHand: {fileID: 474124}
+  m_SpawnPoint: {fileID: 0}
+  m_ChargeSlider: {fileID: 11478818}
+  m_HealthSlider: {fileID: 0}
+  m_CharacterName: 
   m_MovingTurnSpeed: 360
   m_StationaryTurnSpeed: 180
   m_JumpPower: 6
@@ -2623,8 +2627,11 @@ MonoBehaviour:
   m_AnimSpeedMultiplier: 1
   m_GroundCheckDistance: 0.3
   m_MinThrowForce: 3
-  m_MaxThrowForce: 15
+  m_MaxThrowForce: 16
   m_ChargingFactor: 30
+  m_IsDead: 0
+  m_IsActive: 0
+  m_Wins: 0
 --- !u!114 &11446486
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2694,9 +2701,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 2
   m_MinValue: 3
-  m_MaxValue: 15
+  m_MaxValue: 16
   m_WholeNumbers: 0
-  m_Value: 10.64
+  m_Value: 3
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

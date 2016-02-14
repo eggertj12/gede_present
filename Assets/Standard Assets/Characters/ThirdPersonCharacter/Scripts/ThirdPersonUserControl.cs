@@ -54,6 +54,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         private void Update()
         {
+			if (!m_Character.m_IsActive) 
+			{
+				return;
+			}
+
             if (!m_Jump)
             {
 				m_Jump = Input.GetButton (m_CtrlJump);
@@ -82,7 +87,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         // Fixed update is called in sync with physics
         private void FixedUpdate()
         {
-            // read inputs
+			if (!m_Character.m_IsActive) 
+			{
+				return;
+			}
+
+			// read inputs
 			float h = Input.GetAxis(m_CtrlHorizontal);
 			float v = Input.GetAxis(m_CtrlVertical);
 			bool crouch = Input.GetButton(m_CtrlCrouch);
